@@ -2,7 +2,7 @@ git version 2.39.5 (Apple Git-154)
 Python 3.13.11
 cmake version 4.2.3
 GNU Make 3.81
-zsh: command not found: arm-none-eabi-gcc
+arm-none-eabi-gcc (Arm GNU Toolchain 15.3.Rel1 (Build arm-15.149)) 15.3.1 20260627
 code 1.138.0
 picotool v2.3.0 (Darwin, AppleClang-16.0.0.16000026, Release)
 pico-sdk 2.3.0
