@@ -6,6 +6,7 @@
 #include "pico/stdlib.h"
 
 #include "led.h"
+#include "log.h"
 
 const uint BUTTON_PIN = 15;
 const uint DEBOUNCE_MS = 20;
@@ -15,16 +16,20 @@ void handle_command(int command)
     if (command == 'e')
     {
         led_set(true);
-        printf("led %s\n", led_is_on() ? "on" : "off");
+        LOG_INF("led %s\n", led_is_on() ? "on" : "off");
     }
     else if (command == 'd')
     {
         led_set(false);
-        printf("led %s\n", led_is_on() ? "on" : "off");
+        LOG_INF("led %s\n", led_is_on() ? "on" : "off");
+    }
+    else if (command == 'v')
+    {
+        log_version();
     }
     else
     {
-        printf("unknown command: %c\n", command);
+        LOG_ERR("unknown command: %c\n", command);
     }
 }
 
@@ -59,6 +64,7 @@ int main() {
 
         if (command == PICO_ERROR_TIMEOUT) continue;
 
+        LOG_DBG("got %c\n", command);
         handle_command(command);
     }
 }
