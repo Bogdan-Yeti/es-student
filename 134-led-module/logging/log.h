@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stdio.h>
-#include "device.h"
 
 #define LOG_LEVEL_ERR 1
 #define LOG_LEVEL_INF 2
