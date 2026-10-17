@@ -3,26 +3,26 @@
 устройство: 2e8a:000a
 серийный номер: E6635898637C812F
 порт: /dev/cu.usbmodem1201
-начало: 2026-10-17T19:55:00
+начало: 2026-10-17T20:05:21
    0.000 --> enable
-   0.122 <-- enable
-   0.123 <-- dbg read_line:59 got enable
-   0.123 <-- inf handle_command:22 led on
-   2.133 --> disable
-   2.283 <-- disable
-   2.284 <-- dbg read_line:59 got disable
-   2.284 <-- inf handle_command:27 led off
-   4.300 --> info
-   4.384 <-- info
-   4.385 <-- dbg read_line:59 got info
-   4.385 <-- project: 134-led-module
-   4.385 <-- repo: https://github.com/Bogdan-Yeti/es-student
-   4.386 <-- board: pico
-   4.386 <-- serial: E6635898637C812F
-   4.386 <-- chip: manufacturer 0x927, part 0x0002, revision 2
-   4.386 <-- pico sdk : 2.3.0
-   6.405 --> nosuchcommand
-   6.685 <-- nosuchcommand
-   6.686 <-- dbg read_line:59 got nosuchcommand
-   6.686 <-- err handle_command:39 unknown command: nosuchcommand
+   0.128 <-- enable
+   0.128 <-- dbg read_line:59 got enable
+   0.129 <-- inf handle_command:22 led on
+   2.143 --> disable
+   2.289 <-- disable
+   2.290 <-- dbg read_line:59 got disable
+   2.290 <-- inf handle_command:27 led off
+   4.303 --> info
+   4.390 <-- info
+   4.390 <-- dbg read_line:59 got info
+   4.391 <-- project: 211-command-usb
+   4.391 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   4.391 <-- board: pico
+   4.392 <-- serial: E6635898637C812F
+   4.392 <-- chip: manufacturer 0x927, part 0x0002, revision 2
+   4.392 <-- pico sdk: 2.3.0
+   6.410 --> nosuchcommand
+   6.671 <-- nosuchcommand
+   6.672 <-- dbg read_line:59 got nosuchcommand
+   6.672 <-- err handle_command:39 unknown command: nosuchcommand
 итог: отправлено команд 4, принято строк 17
