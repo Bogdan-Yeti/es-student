@@ -1,0 +1,32 @@
+задание: 2.1.2
+проект: 211-command-usb
+устройство: 2e8a:000a
+серийный номер: E6635898637C812F
+порт: /dev/cu.usbmodem1201
+начало: 2026-10-17T20:52:38
+   0.000 --> enable
+   0.134 <-- enable
+   0.134 <-- dbg read_line:96 got enable
+   0.135 <-- inf cmd_enable:22 led on
+   2.154 --> disable
+   2.295 <-- disable
+   2.295 <-- dbg read_line:96 got disable
+   2.296 <-- inf cmd_disable:28 led off
+   4.312 --> info
+   4.396 <-- info
+   4.396 <-- dbg read_line:96 got info
+   4.396 <-- project: 211-command-usb
+   4.396 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   4.396 <-- board: pico
+   4.396 <-- serial: E6635898637C812F
+   4.396 <-- chip: manufacturer 0x927, part 0x0002, revision 2
+   4.396 <-- pico-sdk: 2.3.0
+   6.410 --> ping
+   6.497 <-- ping
+   6.497 <-- dbg read_line:96 got ping
+   6.497 <-- pong
+   8.510 --> nosuchcommand
+   8.778 <-- nosuchcommand
+   8.779 <-- dbg read_line:96 got nosuchcommand
+   8.779 <-- err handle_command:77 unknown command: nosuchcommand
+итог: отправлено команд 5, принято строк 20
