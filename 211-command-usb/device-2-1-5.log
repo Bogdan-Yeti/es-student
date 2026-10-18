@@ -1,0 +1,16 @@
+задание: 2.1.5
+проект: 211-command-usb
+устройство: 2e8a:000a
+серийный номер: E6635898637C812F
+порт: /dev/cu.usbmodem11201
+начало: 2026-10-18T14:58:29
+   0.000 --> dev_info
+   0.162 <-- dev_info
+   0.162 <-- dbg read_line:107 got dev_info
+   0.162 <-- struct          address      size  offset  value
+   0.162 <-- device_card   0x20041f94    20
+   0.162 <-- - version       0x20041f94     4      0 0x10007710
+   0.163 <-- - name          0x20041f98    13      4 es-led-module
+   0.163 <-- - revision      0x20041fa5     1     17        2
+   0.664 <-- fields 18, sizeof 20, padding 2
+итог: отправлено команд 1, принято строк 8
