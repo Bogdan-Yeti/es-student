@@ -102,14 +102,14 @@ void boot_info(void)
     uint32_t stack_top = vectors[0];
     uint32_t reset_handler = vectors[1];
 
-    volatile const uint32_t *gpio_in = (volatile const uint32_t *)0xd0000004;
+    volatile uint32_t *gpio_in = (volatile uint32_t *)0xd0000004;
     uint32_t level = (*gpio_in >> led_pin()) & 1u;
 
     printf("vector table 0x%08x\n", vectors);
     printf("%s 0x%08x\n", "stack top", stack_top);
     printf("%s 0x%08x\n", "reset", reset_handler);
-    printf("%s 0x%08x\n", "reset", reset_handler & ~1u);
+    printf("%s 0x%08x\n", "reset (even)", reset_handler & ~1u);
     printf("gpio in 0x%08x\n", gpio_in);
-    printf("%s %u\n", "led bitn", level);
+    printf("%s %u\n", "led bit", level);
     printf("%s %u\n", "gpio_get", gpio_get(led_pin()));
 }
