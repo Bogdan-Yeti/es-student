@@ -4,8 +4,11 @@
 #include "memory.h"
 #include "command.h"
 #include "device.h"
+#include "led.h"
 
 #include <stdlib.h>
+
+#define VECTOR_TABLE 0x10000100
 
 extern char __flash_binary_start;
 extern char __flash_binary_end;
@@ -90,4 +93,23 @@ void mem_info(void)
         (uintptr_t)&__bss_end__ - (uintptr_t)&__bss_start__, (uintptr_t)&__data_end__ - (uintptr_t)&__data_start__);
     printf("    ram free %8u for heap and %8u for stack\n", 
         (uintptr_t)&__HeapLimit - (uintptr_t)&__bss_end__, (uintptr_t)&__StackTop - (uintptr_t)&__StackBottom);
+}
+
+void boot_info(void)
+{
+    const uint32_t *vectors = (const uint32_t *)VECTOR_TABLE;
+
+    uint32_t stack_top = vectors[0];
+    uint32_t reset_handler = vectors[1];
+
+    volatile const uint32_t *gpio_in = (volatile const uint32_t *)0xd0000004;
+    uint32_t level = (*gpio_in >> led_pin()) & 1u;
+
+    printf("vector table 0x%08x\n", vectors);
+    printf("%s 0x%08x\n", "stack top", stack_top);
+    printf("%s 0x%08x\n", "reset", reset_handler);
+    printf("%s 0x%08x\n", "reset", reset_handler & ~1u);
+    printf("gpio in 0x%08x\n", gpio_in);
+    printf("%s %u\n", "led bitn", level);
+    printf("%s %u\n", "gpio_get", gpio_get(led_pin()));
 }
