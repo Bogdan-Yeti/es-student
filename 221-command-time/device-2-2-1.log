@@ -3,23 +3,23 @@
 устройство: 2e8a:000a
 серийный номер: E6635898637C812F
 порт: /dev/cu.usbmodem11201
-начало: 2026-11-07T21:25:08
+начало: 2026-11-07T21:39:25
    0.000 --> clk_info
    0.001 <-- clk_info
    0.001 <-- dbg read_line:179 got clk_info
-   0.002 <-- clk_ref      12000        12001
+   0.003 <-- clk_ref      12000        12001
    0.004 <-- clk_sys     125000       125000
    0.005 <-- clk_peri    125000       125000
    0.006 <-- clk_usb      48000        48000
    0.007 <-- clk_adc      48000        48000
-   0.008 <-- rosc -         5461
+   0.008 <-- rosc -         5467
    2.032 --> info
-   2.033 <-- info
-   2.034 <-- dbg read_line:179 got info
-   2.034 <-- project: 211-command-time
-   2.035 <-- repo: https://github.com/Bogdan-Yeti/es-student
-   2.035 <-- board: pico
-   2.035 <-- serial: E6635898637C812F
+   2.032 <-- info
+   2.033 <-- dbg read_line:179 got info
+   2.033 <-- project: 221-command-time
+   2.034 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   2.034 <-- board: pico
+   2.034 <-- serial: E6635898637C812F
    2.035 <-- chip: manufacturer 0x927, part 0x0002, revision 2
    2.035 <-- pico-sdk: 2.3.0
 итог: отправлено команд 2, принято строк 16
