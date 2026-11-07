@@ -16,9 +16,6 @@
 char line[LINE_SIZE];
 uint line_length = 0;
 
-const uint BUTTON_PIN = 15;
-const uint DEBOUNCE_MS = 20;
-
 const uint CALC_PI_TERMS = 1000000;
 
 double calc_pi(int n)
@@ -59,18 +56,6 @@ void blink(void)
         last_toggle_us = now_us;
         led_toggle();
     }
-}
-
-void cmd_enable(void)
-{
-    led_set(true);
-    LOG_INF("led %s\n", led_is_on() ? "on" : "off");
-}
-
-void cmd_disable(void)
-{
-    led_set(false);
-    LOG_INF("led %s\n", led_is_on() ? "on" : "off");
 }
 
 void cmd_info(void)
@@ -122,8 +107,6 @@ void main_time_reset(void) {
 }
 
 const struct command_t commands[] = {
-    { "enable", cmd_enable },
-    { "disable", cmd_disable },
     { "info", cmd_info },
     { "version", cmd_version },
     { "ping", cmd_ping },
@@ -190,13 +173,6 @@ void read_line(void)
         line_length = line_length + 1;
         putchar(symbol);
     }
-}
-
-bool get_button_debounce(uint pin)
-{
-    bool state = gpio_get(pin);
-    sleep_ms(DEBOUNCE_MS);
-    return state && gpio_get(pin);
 }
 
 int main() {
