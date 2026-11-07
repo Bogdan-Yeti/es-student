@@ -5,7 +5,7 @@ set(PICO_PLATFORM rp2040)
 
 include(pico_sdk_import.cmake)
 
-project(221_command_usb)
+project(221_command_time)
 
 pico_sdk_init()
 
