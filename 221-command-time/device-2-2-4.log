@@ -1,0 +1,36 @@
+задание: 2.2.4
+проект: 221-command-time
+устройство: 2e8a:000a
+серийный номер: E6635898637C812F
+порт: /dev/cu.usbmodem11201
+начало: 2026-11-07T22:18:56
+   0.000 --> main_time_reset
+   0.005 <-- main_time_reset
+   0.005 <-- dbg read_line:164 got main_time_reset
+   0.005 <-- max reset
+   2.032 --> main_time_exec
+   2.033 <-- main_time_exec
+   2.033 <-- dbg read_line:164 got main_time_exec
+   2.033 <-- iteration avg 2.51 us, max 623 us
+   3.048 --> calc_pi
+   3.048 <-- calc_pi
+   3.049 <-- dbg read_line:164 got calc_pi
+   7.755 <-- pi: 3.14159165
+   7.756 <-- time: 4706 ms
+   9.165 --> main_time_exec
+   9.166 <-- main_time_exec
+   9.166 <-- dbg read_line:164 got main_time_exec
+   9.167 <-- iteration avg 5.71 us, max 4707211 us
+  14.252 --> main_time_exec
+  14.252 <-- main_time_exec
+  14.253 <-- dbg read_line:164 got main_time_exec
+  14.253 <-- iteration avg 2.64 us, max 4707211 us
+  15.268 --> main_time_reset
+  15.269 <-- main_time_reset
+  15.269 <-- dbg read_line:164 got main_time_reset
+  15.269 <-- max reset
+  16.291 --> main_time_exec
+  16.292 <-- main_time_exec
+  16.292 <-- dbg read_line:164 got main_time_exec
+  16.292 <-- iteration avg 2.59 us, max 323 us
+итог: отправлено команд 7, принято строк 22

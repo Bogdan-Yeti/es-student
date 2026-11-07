@@ -105,7 +105,7 @@ void main_time_exec(void) {
 
 void main_time_reset(void) {
     profiling_reset_max();
-    printf("max iteration time reset\n");
+    printf("max reset\n");
 }
 
 const struct command_t commands[] = {
