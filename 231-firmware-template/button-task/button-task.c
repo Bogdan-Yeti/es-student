@@ -2,6 +2,13 @@
 #include "hardware/gpio.h"
 #include "led-task.h"
 
+typedef enum {
+    BUTTON_RELEASED,
+    BUTTON_PRESSED_Q,
+    BUTTON_PRESSED,
+    BUTTON_RELEASED_Q
+} button_state_t;
+
 static button_state_t button_state;
 const static uint BUTTON_PIN = 15;
 static uint64_t time_beg;

@@ -2,13 +2,6 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 
-typedef enum {
-    BUTTON_RELEASED,
-    BUTTON_PRESSED_Q,
-    BUTTON_PRESSED,
-    BUTTON_RELEASED_Q
-} button_state_t;
-
 static uint64_t half_period;
 static led_state_t led_state;
 static uint64_t last_toggle_us;
