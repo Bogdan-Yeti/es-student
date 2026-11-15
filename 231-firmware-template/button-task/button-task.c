@@ -27,10 +27,10 @@ void button_task_handle(void)
             }
             break;
         case BUTTON_PRESSED_Q:
-            if (state == false && time - time_beg > 20000) {
-                button_state = BUTTON_PRESSED;
-            } else if (state == true) {
+            if (state) {
                 button_state = BUTTON_RELEASED;
+            } else if (time - time_beg > 20000) {
+                button_state = BUTTON_PRESSED;
                 count++;
                 led_task_next_state();
             }
@@ -42,10 +42,10 @@ void button_task_handle(void)
             }
             break;
         case BUTTON_RELEASED_Q:
-            if (state == true && time - time_beg > 20000) {
-                button_state = BUTTON_RELEASED;
-            } else if (state == false) {
+            if (!state) {
                 button_state = BUTTON_PRESSED;
+            } else if (time - time_beg > 20000) {
+                button_state = BUTTON_RELEASED;
             }
             break;
     }

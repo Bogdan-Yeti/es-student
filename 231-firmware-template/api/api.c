@@ -152,7 +152,7 @@ static void cmd_button_enable(const command_t *command) {
     } else {
         state = "released";
     }
-    printf("button: %s, presses %u", state, button_task_get_press_count());
+    printf("button: %s, presses %u\n", state, button_task_get_press_count());
 }
 
 static const api_command_t commands[] = {
