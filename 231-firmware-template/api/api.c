@@ -10,6 +10,7 @@
 #include <errno.h>
 #include "led-task.h"
 #include "button-task.h"
+#include "pi-task.h"
 
 typedef void (*api_callback_t)(const command_t *command);
 
@@ -59,20 +60,7 @@ static void main_time_reset(const command_t *command) {
     printf("max reset\n");
 }
 
-double calc_pi(uint n)
-{
-    double sum = 0.0;
-    double sign = 1.0;
-
-    for (int k = 0; k < n; k++) {
-        sum += sign / (2.0 * k + 1.0);
-        sign = -sign;
-    }
-
-    return 4.0 * sum;
-}
-
-void cmd_calc_pi(const command_t *command)
+void cmd_start_pi(const command_t *command)
 {
     uint32_t CALC_PI_TERMS = 1000000;
     if (command->argc > 1 || command->argc == 1 && !parse_u32(command->argv[0], &CALC_PI_TERMS)) {
@@ -83,13 +71,30 @@ void cmd_calc_pi(const command_t *command)
         printf("error: terms must be greater than 0\n");
         return;
     }
+    if (pi_task_get_state() == PI_COUNTING) {
+        printf("error: pi is busy\n");
+        return;
+    }
+    pi_task_start(CALC_PI_TERMS);
 
-    uint64_t start_us = time_us_64();
-    double pi_result = calc_pi(CALC_PI_TERMS);
-    uint64_t spent_us = time_us_64() - start_us;
+    printf("pi: started, %u terms\n", CALC_PI_TERMS);
+}
 
-    printf("pi: %.9f\n", pi_result);
-    printf("time: %llu ms\n", spent_us / 1000);
+void cmd_pi(const command_t *command) {
+    double res;
+    uint32_t time;
+    switch (pi_task_get_state()) {
+        case PI_NOT_RUNNING:
+            printf("pi: not started\n");
+            break;
+        case PI_COUNTING:
+            printf("pi: running\n");
+            break;
+        case PI_READY:
+            pi_task_get_result(&res, &time);
+            printf("pi: %.8f in %u ms\n", res, time);
+            break;
+    }
 }
 
 static void print_led_state(void) {
@@ -158,7 +163,8 @@ static void cmd_button_enable(const command_t *command) {
 static const api_command_t commands[] = {
     { "info", "device passport", cmd_info },
     { "uptime", "time since reset", cmd_uptime_info },
-    { "calc_pi", "calculate pi: calc_pi [terms]", cmd_calc_pi },
+    { "pi_start", "calculate pi: pi_start [terms]", cmd_start_pi },
+    { "pi", "result of calculate pi", cmd_pi },
     { "main_time_exec", "superloop iteration: average and maximum", main_time_exec },
     { "main_time_reset", "reset maximum iteration", main_time_reset },
     { "led_period", "", cmd_led_period},
