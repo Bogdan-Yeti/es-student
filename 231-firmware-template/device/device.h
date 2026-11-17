@@ -14,11 +14,12 @@
 #define DEVICE_BOARD "unknown"
 #endif
 
-void device_info(void);
+typedef struct {
+    char *board_type;
+    char serial_num[17];
+    uint32_t part;
+    uint32_t revision;
+    char *pico_sdk;
+} device_info_t;
 
-struct info_t
-{
-    uint32_t version;
-    char name[13];
-    uint8_t revision;
-};
+void device_get_info(device_info_t *info);

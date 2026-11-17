@@ -12,6 +12,11 @@
 #include "button-task.h"
 #include "pi-task.h"
 
+#include "pico/unique_id.h"
+#include "hardware/regs/addressmap.h"
+#include "hardware/regs/sysinfo.h"
+#include "pico/version.h"
+
 typedef void (*api_callback_t)(const command_t *command);
 
 typedef struct
@@ -43,21 +48,29 @@ static bool parse_u32(const char *text, uint32_t *value)
 
 static void cmd_info(const command_t *command)
 {
-    device_info();
+    volatile uint32_t *chip_id = (uint32_t *)(SYSINFO_BASE + SYSINFO_CHIP_ID_OFFSET);
+    uint32_t id = *chip_id;
+
+    uint32_t manufacturer = (id & SYSINFO_CHIP_ID_MANUFACTURER_BITS) >> SYSINFO_CHIP_ID_MANUFACTURER_LSB;
+    uint32_t revision = (id & SYSINFO_CHIP_ID_REVISION_BITS) >> SYSINFO_CHIP_ID_REVISION_LSB;
+    uint32_t part = (id & SYSINFO_CHIP_ID_PART_BITS) >> SYSINFO_CHIP_ID_PART_LSB;
+
+    char board_id[PICO_UNIQUE_BOARD_ID_SIZE_BYTES * 2 + 1];
+    pico_get_unique_board_id_string(board_id, sizeof(board_id));
+
+    printf("name: %s\n", FIRMWARE_NAME);
+    printf("version: %s\n", FIRMWARE_VERSION);
+    printf("project: %s\n", DEVICE_PROJECT);
+    printf("repo: %s\n", DEVICE_REPO);
+    printf("board: %s\n", DEVICE_BOARD);
+    printf("serial: %s\n", board_id);
+    printf("chip: manufacturer 0x%03x, part 0x%04x, revision %u\n", manufacturer, part, revision);
+    printf("pico-sdk: %s\n", PICO_SDK_VERSION_STRING);
 }
 
 static void cmd_uptime_info(const command_t *command) 
 {
     printf("uptime: %.2f ms\n", (double)time_us_64() / 1000);
-}
-
-static void main_time_exec(const command_t *command) {
-    printf("iteration avg %.2f us, max %u us\n", profiling_avg_us(), (unsigned)profiling_max_us());
-}
-
-static void main_time_reset(const command_t *command) {
-    profiling_reset_max();
-    printf("max reset\n");
 }
 
 void cmd_start_pi(const command_t *command)
@@ -160,18 +173,30 @@ static void cmd_button_enable(const command_t *command) {
     printf("button: %s, presses %u\n", state, button_task_get_press_count());
 }
 
+static void cmd_profiling(const command_t *command) {
+    for (int i = 0; i != CLOCK_NUM; i++) {
+        profiling_result_t res;
+        profiling_get(i, &res);
+        printf("%-10s count %-20u mean %.2f us max %u\n", res.name, res.count, res.avg, res.max);
+    }
+}
+
+static void cmd_profiling_reset(const command_t *command) {
+    profiling_reset();
+}
+
 static const api_command_t commands[] = {
     { "info", "device passport", cmd_info },
     { "uptime", "time since reset", cmd_uptime_info },
     { "pi_start", "calculate pi: pi_start [terms]", cmd_start_pi },
     { "pi", "result of calculate pi", cmd_pi },
-    { "main_time_exec", "superloop iteration: average and maximum", main_time_exec },
-    { "main_time_reset", "reset maximum iteration", main_time_reset },
     { "led_period", "", cmd_led_period},
     { "led_enable", "", cmd_led_enable},
     { "led_disable", "", cmd_led_disable},
     { "led_blink", "", cmd_led_blink},
-    { "button", "", cmd_button_enable}
+    { "button", "", cmd_button_enable},
+    { "profiling", "", cmd_profiling },
+    { "profiling_reset", "", cmd_profiling_reset },
 };
 
 static const uint command_count = sizeof(commands) / sizeof(commands[0]);

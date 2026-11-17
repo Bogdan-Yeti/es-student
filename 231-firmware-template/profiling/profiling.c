@@ -1,46 +1,44 @@
 #include "profiling.h"
 #include "pico/stdlib.h"
+#include "pico/time.h"
 
-// итерация около 2 мкс, за секунду их около 500 000;
-// ближайшая степень двойки 2^19 = 524 288, среднее помнит около секунды
-#define AVG_SHIFT 19
-// замер в 1/256 долях микросекунды, чтобы среднее не теряло дробную часть
-#define FRACTION_SHIFT 8
+static uint32_t count[CLOCK_NUM];
+static uint32_t sum[CLOCK_NUM];
+static uint32_t max[CLOCK_NUM];
 
-static uint64_t avg_sum = 0;
+static uint32_t beg_time[CLOCK_NUM];
 
-static uint32_t previous_us = 0;
-static uint32_t max_us = 0;
+char *cl_name[CLOCK_NUM];
 
-void profiling_init(void)
-{
-    previous_us = time_us_32();
+void profiling_stopwatch_init(uint32_t id, const char *name) {
+    cl_name[id] = name;
 }
 
-void profiling_iteration(void)
-{
-    uint32_t now_us = time_us_32();
-    uint32_t iteration_us = now_us - previous_us;
-    previous_us = now_us;
+void profiling_start(uint32_t id) {
+    beg_time[id] = time_us_32();
+    count[id]++;
+}
 
-    if (iteration_us > max_us)
-    {
-        max_us = iteration_us;
+void profiling_stop(uint32_t id) {
+    uint32_t res = time_us_32() - beg_time[id];
+    sum[id] += res;
+    if (res > max[id]) {
+        max[id] = res;
     }
-
-    avg_sum = avg_sum - (avg_sum >> AVG_SHIFT) + ((uint64_t)iteration_us << FRACTION_SHIFT);
 }
 
-float profiling_avg_us(void)
-{
-    return (float)(avg_sum >> AVG_SHIFT) / (1 << FRACTION_SHIFT);
-}
-uint32_t profiling_max_us(void)
-{
-    return max_us;
+bool profiling_get(uint32_t id, profiling_result_t *result) {
+    if (!cl_name[id]) {
+        return false;
+    }
+    *result = (profiling_result_t){cl_name[id], count[id], (double)sum[id] / count[id], max[id]};
+    return true;
 }
 
-void profiling_reset_max(void)
-{
-    max_us = 0;
+void profiling_reset(void) {
+    for (int i = 0; i != CLOCK_NUM; i++) {
+        count[i] = 0;
+        sum[i] = 0;
+        max[i] = 0;
+    }
 }
