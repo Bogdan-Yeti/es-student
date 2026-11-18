@@ -1,8 +1,9 @@
-#include "pico/types.h"
-#include "stdio-text-protocol.h"
+#include "api.h"
+
+#include <stdint.h>
 #include "pico/stdlib.h"
-#include "profiling.h"
-#include "device.h"
+#include "profiling/profiling.h"
+#include "device/device.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,6 +17,9 @@
 #include "hardware/regs/addressmap.h"
 #include "hardware/regs/sysinfo.h"
 #include "pico/version.h"
+
+#include "firmware.h"
+#include "systime/systime.h"
 
 typedef void (*api_callback_t)(const command_t *command);
 
@@ -53,8 +57,8 @@ static void cmd_info(const command_t *command)
 
     printf("name: %s\n", FIRMWARE_NAME);
     printf("version: %s\n", FIRMWARE_VERSION);
-    printf("project: %s\n", DEVICE_PROJECT);
-    printf("repo: %s\n", DEVICE_REPO);
+    printf("project: %s\n", FIRMWARE_PROJECT);
+    printf("repo: %s\n", FIRMWARE_REPO);
     printf("board: %s\n", info.board_type);
     printf("serial: %s\n", info.serial_num);
     printf("chip: manufacturer 0x%03x, part 0x%04x, revision %u\n", info.manufacturer, info.part, info.revision);
@@ -63,7 +67,7 @@ static void cmd_info(const command_t *command)
 
 static void cmd_uptime_info(const command_t *command) 
 {
-    printf("uptime: %.2f ms\n", (double)time_us_64() / 1000);
+    printf("uptime: %.2f ms\n", (double)systime_us() / 1000);
 }
 
 void cmd_start_pi(const command_t *command)

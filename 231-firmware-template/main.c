@@ -5,9 +5,10 @@
 #include "led-task.h"
 #include "button-task.h"
 #include "pi-task.h"
-#include "log.h"
-#include "device.h"
-#include "profiling.h"
+#include "logging/log.h"
+#include "device/device.h"
+#include "profiling/profiling.h"
+#include "firmware.h"
 
 #include "api.h"
 
@@ -22,7 +23,7 @@ enum {
 int main() {
     stdio_init_all();
 
-    LOG_INF("%s %s\n", DEVICE_NAME, FIRMWARE_VERSION);
+    LOG_INF("%s %s\n", FIRMWARE_NAME, FIRMWARE_VERSION);
 
     led_task_init();
 

@@ -1,4 +1,4 @@
-#include "profiling.h"
+#include "profiling/profiling.h"
 #include "pico/stdlib.h"
 #include "pico/time.h"
 
