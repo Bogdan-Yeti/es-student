@@ -171,6 +171,10 @@ static void cmd_button_enable(const command_t *command) {
 }
 
 static void cmd_profiling(const command_t *command) {
+    if (!PROFILING_ENABLED) {
+        printf("profiling is disabled in this build\n");
+        return;
+    }
     for (int i = 0; i != CLOCK_NUM; i++) {
         profiling_result_t res;
         profiling_get(i, &res);

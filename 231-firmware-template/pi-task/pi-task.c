@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include "pi-task.h"
 #include "pico/time.h"
+#include "systime/systime.h"
 
 // прикидка: за член ряда 4 операции с double, 175 + 110 + 190 + 110 = 585 тактов;
 // 100 членов по 585 тактов при 125 МГц — около 0.00047 с
@@ -34,7 +35,7 @@ void pi_task_handle(void)
         return;
     }
 
-    if (!pi_k) beg_time = time_us_64() / 1000;
+    if (!pi_k) beg_time = systime_us() / 1000;
     uint32_t rem = pi_n - pi_k;
     uint32_t end = pi_k + (rem < PI_TERMS_PER_CALL ? rem : PI_TERMS_PER_CALL);
     for (; pi_k < end; pi_k++) {
@@ -45,7 +46,7 @@ void pi_task_handle(void)
     if (pi_k == pi_n) {
         pi_result = 4.0 * pi_sum;
         state_t = PI_READY;
-        res_time = time_us_64() / 1000 - beg_time;
+        res_time = systime_us() / 1000 - beg_time;
     }
 }
 
