@@ -52,7 +52,7 @@ static void cmd_info(const command_t *command)
 
 static void cmd_uptime_info(const command_t *command) 
 {
-    printf("uptime: %.2f ms\n", (double)systime_us() / 1000);
+    printf("uptime: %u ms\n", systime_ms());
 }
 
 static void cmd_start_pi(const command_t *command)
@@ -87,7 +87,7 @@ static void cmd_pi(const command_t *command) {
             break;
         case PI_READY:
             pi_task_get_result(&res, &time);
-            printf("pi: %.8f in %u ms\n", res, time);
+            printf("pi: %.9f in %u ms\n", res, time);
             break;
     }
 }
@@ -163,12 +163,13 @@ static void cmd_profiling(const command_t *command) {
     for (int i = 0; i != CLOCK_NUM; i++) {
         profiling_result_t res;
         profiling_get(i, &res);
-        printf("%-10s count %-20u mean %.2f us max %u\n", res.name, res.count, res.avg, res.max);
+        printf("%-10s count %-20u mean %.2f us max %u us\n", res.name, res.count, res.avg, res.max);
     }
 }
 
 static void cmd_profiling_reset(const command_t *command) {
     profiling_reset();
+    printf("profiling reset\n");
 }
 
 const api_command_t  api_commands[] = {
