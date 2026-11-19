@@ -176,13 +176,13 @@ const api_command_t  api_commands[] = {
     { "uptime", "time since reset", cmd_uptime_info },
     { "pi_start", "calculate pi: pi_start [terms]", cmd_start_pi },
     { "pi", "result of calculate pi", cmd_pi },
-    { "led_period", "", cmd_led_period},
-    { "led_enable", "", cmd_led_enable},
-    { "led_disable", "", cmd_led_disable},
-    { "led_blink", "", cmd_led_blink},
-    { "button", "", cmd_button_enable},
-    { "profiling", "", cmd_profiling },
-    { "profiling_reset", "", cmd_profiling_reset },
+    { "led_period", "set the blinking period", cmd_led_period},
+    { "led_enable", "switch the LED to the 'on' state.", cmd_led_enable},
+    { "led_disable", "switch the LED to the 'off' state.", cmd_led_disable},
+    { "led_blink", "switch the LED to the 'blinking' state.", cmd_led_blink},
+    { "button", "the state of the button and the number of presses.", cmd_button_enable},
+    { "profiling", "the results of the stopwatches", cmd_profiling },
+    { "profiling_reset", "reset the stopwatch results.", cmd_profiling_reset },
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);

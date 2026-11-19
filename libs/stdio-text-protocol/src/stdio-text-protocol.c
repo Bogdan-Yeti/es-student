@@ -22,6 +22,7 @@ const command_t *stdio_text_protocol_handle(void)
 
         pars.name = NULL;
         pars.argc = 0;
+        pars.truncated = false;
 
         for (uint i = 0; i < end_ind; i++) {
             if (buf[i] == ' ') {
@@ -56,9 +57,6 @@ const command_t *stdio_text_protocol_handle(void)
         buf[end_ind++] = (char)c;
         putchar(c);
     } else {
-        if (end_ind == 0) {
-            pars.truncated = false;
-        }
         pars.truncated = true;
     }
 

@@ -28,6 +28,7 @@ int main() {
     stdio_text_protocol_init();
 
     button_task_init(led_task_next_state);
+    led_task_init();
 
     profiling_stopwatch_init(STOPWATCH_LOOP, "loop");
     profiling_stopwatch_init(STOPWATCH_COMMAND, "command");
