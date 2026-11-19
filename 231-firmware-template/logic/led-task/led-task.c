@@ -3,15 +3,21 @@
 
 #include "platform/platform.h"
 
-static uint64_t half_period = 1000 * 1000 / 2;
-static led_state_t led_state = LED_STATE_BLINK;
+static uint64_t half_period;
+static led_state_t led_state;
 static uint64_t last_toggle_us;
-static bool state = false;
+static bool state;
 
 static void led_set(bool on)
 {
     state = on;
     platform_led_set(on);
+}
+
+void led_task_init(void) {
+    half_period = 1000 * 1000 / 2;
+    led_state = LED_STATE_BLINK;
+    led_set(false);
 }
 
 static void led_toggle(void)
