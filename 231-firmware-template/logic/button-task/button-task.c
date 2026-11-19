@@ -1,5 +1,4 @@
 #include "button-task.h"
-#include "led-task/led-task.h"
 #include "systime/systime.h"
 #include "platform/platform.h"
 
@@ -11,9 +10,8 @@ typedef enum {
 } button_state_t;
 
 static button_state_t button_state;
-const static uint BUTTON_PIN = 15;
 static uint64_t time_beg;
-static uint count = 0;
+static uint16_t count = 0;
 static button_task_callback_t func;
 
 void button_task_init(button_task_callback_t on_press) {
@@ -39,7 +37,7 @@ void button_task_handle(void)
             } else if (time - time_beg > 20000) {
                 button_state = BUTTON_PRESSED;
                 count++;
-                if (func != NULL)
+                if (!func)
                     func();
             }
             break;
@@ -63,6 +61,6 @@ bool button_task_is_pressed(void) {
     return button_state == BUTTON_PRESSED || button_state == BUTTON_PRESSED_Q;
 }
 
-uint button_task_get_press_count(void) {
+uint16_t button_task_get_press_count(void) {
     return count;
 }

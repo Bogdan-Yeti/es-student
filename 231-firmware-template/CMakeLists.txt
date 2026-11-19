@@ -28,7 +28,7 @@ target_link_libraries(platform PRIVATE
 # логика прибора: задачи и команды, без SDK
 add_library(logic STATIC
     logic/api/api.c
-    logic/api/api-commands.c
+    logic/api/api-callbacks.c
     logic/button-task/button-task.c
     logic/led-task/led-task.c
     logic/pi-task/pi-task.c

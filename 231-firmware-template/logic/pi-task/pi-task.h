@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pico/stdlib.h"
+#include <stdint.h>
 
 typedef enum {
     PI_NOT_RUNNING,

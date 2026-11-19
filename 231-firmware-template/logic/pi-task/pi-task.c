@@ -1,6 +1,6 @@
-#include <stdbool.h>
 #include "pi-task.h"
-#include "pico/time.h"
+
+#include <stdbool.h>
 #include "systime/systime.h"
 
 // прикидка: за член ряда 4 операции с double, 175 + 110 + 190 + 110 = 585 тактов;

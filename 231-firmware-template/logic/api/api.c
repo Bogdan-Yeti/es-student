@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <string.h>
 #include "api.h"
 #include "api-commands.h"
+#include <stdio.h>
+#include <string.h>
 
 void api_handle(const command_t *command) {
     if (command->truncated) {
