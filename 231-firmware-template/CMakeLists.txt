@@ -11,12 +11,47 @@ pico_sdk_init()
 
 add_compile_options(-Wall)
 
+add_subdirectory(../libs ${CMAKE_BINARY_DIR}/libs)
+
+add_library(platform STATIC
+    platform/platform.c
+)
+
+target_include_directories(platform PUBLIC
+    platform
+)
+
+target_link_libraries(platform PRIVATE
+    pico_stdlib
+)
+
+# логика прибора: задачи и команды, без SDK
+add_library(logic STATIC
+    logic/api/api.c
+    logic/api/api-commands.c
+    logic/button-task/button-task.c
+    logic/led-task/led-task.c
+    logic/pi-task/pi-task.c
+)
+
+target_include_directories(logic PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    logic
+)
+
+target_link_libraries(logic PUBLIC
+    stdio_text_protocol
+)
+
+target_link_libraries(logic PRIVATE
+    pico_stdlib
+    profiling
+    device
+    systime
+)
+
 add_executable(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/api/api.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/led-task/led-task.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/button-task/button-task.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/pi-task/pi-task.c
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -25,9 +60,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/led-task
     ${CMAKE_CURRENT_SOURCE_DIR}/button-task
     ${CMAKE_CURRENT_SOURCE_DIR}/pi-task
+    ${CMAKE_CURRENT_SOURCE_DIR}/platform
 )
-
-add_subdirectory(../libs ${CMAKE_BINARY_DIR}/libs)
 
 target_link_libraries(${PROJECT_NAME}
     pico_stdlib
@@ -37,6 +71,8 @@ target_link_libraries(${PROJECT_NAME}
     profiling
     stdio_text_protocol
     systime
+    platform
+    logic
 )
 
 # выключатель профилирования: 0 — вызовов секундомеров в образе нет

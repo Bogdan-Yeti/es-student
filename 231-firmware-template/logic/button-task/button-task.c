@@ -1,7 +1,7 @@
 #include "button-task.h"
-#include "hardware/gpio.h"
-#include "led-task.h"
+#include "led-task/led-task.h"
 #include "systime/systime.h"
+#include "platform/platform.h"
 
 typedef enum {
     BUTTON_RELEASED,
@@ -14,16 +14,15 @@ static button_state_t button_state;
 const static uint BUTTON_PIN = 15;
 static uint64_t time_beg;
 static uint count = 0;
+static button_task_callback_t func;
 
-void button_task_init(void) {
-    gpio_init(BUTTON_PIN);
-    gpio_set_dir(BUTTON_PIN, GPIO_IN);
-    gpio_pull_up(BUTTON_PIN);
+void button_task_init(button_task_callback_t on_press) {
+    func = on_press;
 }
 
 void button_task_handle(void)
 {
-    bool state = gpio_get(BUTTON_PIN);
+    bool state = platform_button_read();
     uint64_t time = systime_us();
 
     switch (button_state)
@@ -40,7 +39,8 @@ void button_task_handle(void)
             } else if (time - time_beg > 20000) {
                 button_state = BUTTON_PRESSED;
                 count++;
-                led_task_next_state();
+                if (func != NULL)
+                    func();
             }
             break;
         case BUTTON_PRESSED:

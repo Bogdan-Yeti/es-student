@@ -1,32 +1,22 @@
 #include "led-task.h"
-#include "pico/stdlib.h"
-#include "hardware/gpio.h"
 #include "systime/systime.h"
 
-static uint64_t half_period;
-static led_state_t led_state;
+#include "platform/platform.h"
+
+static uint64_t half_period = 1000 * 1000 / 2;
+static led_state_t led_state = LED_STATE_BLINK;
 static uint64_t last_toggle_us;
-const static uint LED_PIN = 25;
 static bool state = false;
 
 static void led_set(bool on)
 {
     state = on;
-    gpio_put(LED_PIN, state);
+    platform_led_set(on);
 }
 
 static void led_toggle(void)
 {
     led_set(!state);
-}
-
-void led_task_init(void)
-{
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
-    led_set(false);
-    half_period = 1000 * 1000 / 2;
-    led_state = LED_STATE_BLINK;
 }
 
 void led_task_set_state(led_state_t state)
