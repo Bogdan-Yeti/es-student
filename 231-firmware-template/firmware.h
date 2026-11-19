@@ -1,3 +1,5 @@
+#pragma once
+
 #define FIRMWARE_NAME "SWAG"
 
 #define FIRMWARE_VERSION "1.0.0"

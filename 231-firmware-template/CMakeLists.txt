@@ -44,7 +44,6 @@ target_link_libraries(logic PUBLIC
 )
 
 target_link_libraries(logic PRIVATE
-    pico_stdlib
     profiling
     device
     systime

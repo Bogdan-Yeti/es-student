@@ -55,7 +55,7 @@ static void cmd_uptime_info(const command_t *command)
     printf("uptime: %.2f ms\n", (double)systime_us() / 1000);
 }
 
-void cmd_start_pi(const command_t *command)
+static void cmd_start_pi(const command_t *command)
 {
     uint32_t CALC_PI_TERMS = 1000000;
     if (command->argc > 1 || command->argc == 1 && !parse_u32(command->argv[0], &CALC_PI_TERMS)) {
@@ -75,7 +75,7 @@ void cmd_start_pi(const command_t *command)
     printf("pi: started, %u terms\n", CALC_PI_TERMS);
 }
 
-void cmd_pi(const command_t *command) {
+static void cmd_pi(const command_t *command) {
     double res;
     uint32_t time;
     switch (pi_task_get_state()) {
