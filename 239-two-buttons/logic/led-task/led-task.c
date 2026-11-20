@@ -91,19 +91,21 @@ void led_task_next_state(void) {
 }
 
 void led_task_next_period(void) {
-    switch (half_period)
-    { 
-        case 500000:
-            half_period = 125000;
+    uint32_t current_ms = led_task_get_period_ms();
+    uint32_t next_ms;
+
+    switch (current_ms) {
+        case 250:
+            next_ms = 500;
             break;
-        case 125000:
-            half_period = 250000;
+        case 500:
+            next_ms = 1000;
             break;
-        case 250000:
-            half_period = 500000;
-            break;
+        case 1000:
         default:
-            half_period = 125000;
+            next_ms = 250;
             break;
     }
+
+    led_task_set_period_ms(next_ms);
 }
