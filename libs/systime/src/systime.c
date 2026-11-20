@@ -5,7 +5,7 @@ uint64_t systime_us(void) {
     return time_us_64();
 }
 
-uint64_t systime_ms(void) {
+uint32_t systime_ms(void) {
     return time_us_64() / 1000;
 }
 
