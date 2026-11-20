@@ -46,19 +46,19 @@ static void cmd_info(const command_t *command)
     printf("repo: %s\n", FIRMWARE_REPO);
     printf("board: %s\n", info.board_type);
     printf("serial: %s\n", info.serial_num);
-    printf("chip: manufacturer 0x%03x, part 0x%04x, revision %u\n", info.manufacturer, info.part, info.revision);
+    printf("chip: manufacturer 0x%03lx, part 0x%04lx, revision %lu\n", info.manufacturer, info.part, info.revision);
     printf("pico-sdk: %s\n", info.pico_sdk);
 }
 
 static void cmd_uptime_info(const command_t *command) 
 {
-    printf("uptime: %u ms\n", systime_ms());
+    printf("uptime: %lu ms\n", systime_ms());
 }
 
 static void cmd_start_pi(const command_t *command)
 {
     uint32_t CALC_PI_TERMS = 1000000;
-    if (command->argc > 1 || command->argc == 1 && !parse_u32(command->argv[0], &CALC_PI_TERMS)) {
+    if (command->argc > 1 || (command->argc == 1 && !parse_u32(command->argv[0], &CALC_PI_TERMS))) {
         printf("error: usage pi_start [<terms>]\n");
         return;
     }
@@ -72,7 +72,7 @@ static void cmd_start_pi(const command_t *command)
     }
     pi_task_start(CALC_PI_TERMS);
 
-    printf("pi: started, %u terms\n", CALC_PI_TERMS);
+    printf("pi: started, %lu terms\n", CALC_PI_TERMS);
 }
 
 static void cmd_pi(const command_t *command) {
@@ -87,7 +87,7 @@ static void cmd_pi(const command_t *command) {
             break;
         case PI_READY:
             pi_task_get_result(&res, &time);
-            printf("pi: %.9f in %u ms\n", res, time);
+            printf("pi: %.9f in %lu ms\n", res, time);
             break;
     }
 }
@@ -104,9 +104,12 @@ static void print_led_state(void) {
         case LED_STATE_BLINK:
             state = "blink";
             break;
+        default:
+            state = "unknown";
+            break;
     }
     uint32_t period = led_task_get_period_ms();
-    printf("led: %s, period %u ms\n", state, period);
+    printf("led: %s, period %lu ms\n", state, period);
 }
 
 static void cmd_led_period(const command_t *command)
@@ -163,7 +166,7 @@ static void cmd_profiling(const command_t *command) {
     for (int i = 0; i != CLOCK_NUM; i++) {
         profiling_result_t res;
         profiling_get(i, &res);
-        printf("%-10s count %-20u mean %.2f us max %u us\n", res.name, res.count, res.avg, res.max);
+        printf("%-10s count %-20lu mean %.2f us max %lu us\n", res.name, res.count, res.avg, res.max);
     }
 }
 

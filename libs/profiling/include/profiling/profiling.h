@@ -19,7 +19,7 @@ void profiling_stop(uint32_t id);
 #endif
 
 typedef struct {
-    char *name;
+    const char *name;
     uint32_t count;
     double avg;
     uint32_t max;
