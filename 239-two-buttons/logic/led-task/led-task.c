@@ -102,5 +102,8 @@ void led_task_next_period(void) {
         case 250000:
             half_period = 500000;
             break;
+        default:
+            half_period = 125000;
+            break;
     }
 }
