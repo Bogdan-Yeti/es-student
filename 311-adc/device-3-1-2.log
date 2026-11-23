@@ -1,0 +1,48 @@
+задание: 3.1.2
+проект: 311-adc
+устройство: 2e8a:000a
+серийный номер: E6635898637C812F
+порт: /dev/cu.usbmodem21201
+начало: 2026-11-23T15:44:43
+   0.000 --> 
+   0.543 --> help
+   0.544 <-- help
+   0.544 <-- help list of commands
+   0.544 <-- info device passport
+   0.544 <-- uptime time since reset
+   0.544 <-- pi_start calculate pi: pi_start [terms]
+   0.544 <-- pi result of calculate pi
+   0.544 <-- led_period set the blinking period
+   0.544 <-- led_enable switch the LED to the 'on' state.
+   0.545 <-- led_disable switch the LED to the 'off' state.
+   0.545 <-- led_blink switch the LED to the 'blinking' state.
+   0.545 <-- button the state of the button and the number of presses.
+   0.545 <-- profiling the results of the stopwatches
+   0.545 <-- profiling_reset reset the stopwatch results.
+   0.596 <-- get_voltage voltage on GP26, ADC input 0
+   0.596 <-- get_temp chip temperature, degrees Celsius
+   0.596 <-- tm_start start telemetry
+   0.596 <-- tm_stop stop telemetry
+   1.574 --> info
+   1.629 <-- info
+   1.629 <-- name: es-adc
+   1.629 <-- version: 1.0.0
+   1.629 <-- project: 311-adc
+   1.629 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   1.629 <-- board: unknown
+   1.629 <-- serial: E6635898637C812F
+   1.629 <-- chip: manufacturer 0x927, part 0x0002, revision 2
+   1.629 <-- pico-sdk: 2.3.0
+   2.599 --> get_temp
+   2.649 <-- get_temp
+   2.650 <-- temp: 14.0 C
+   3.623 --> get_temp
+   3.676 <-- get_temp
+   3.676 <-- temp: 15.9 C
+   4.651 --> get_temp
+   4.704 <-- get_temp
+   4.704 <-- temp: 15.9 C
+   5.677 --> get_voltage
+   5.732 <-- get_voltage
+   5.732 <-- voltage: 0.856 V
+итог: отправлено кадров 7, принято строк 34

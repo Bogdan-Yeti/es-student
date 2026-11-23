@@ -33,6 +33,7 @@ add_library(logic STATIC
     logic/button-task/button-task.c
     logic/led-task/led-task.c
     logic/pi-task/pi-task.c
+    logic/telemetry-task/telemetry-task.c
 )
 
 target_include_directories(logic PUBLIC

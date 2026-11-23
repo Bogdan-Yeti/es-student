@@ -9,6 +9,7 @@
 #include "profiling/profiling.h"
 #include "firmware.h"
 #include "platform.h"
+#include "telemetry-task/telemetry-task.h"
 
 #include "api/api.h"
 
@@ -29,6 +30,8 @@ int main() {
 
     button_task_init(led_task_next_state);
     led_task_init();
+
+    telemetry_task_init(api_print_telemetry);
 
     profiling_stopwatch_init(STOPWATCH_LOOP, "loop");
     profiling_stopwatch_init(STOPWATCH_COMMAND, "command");
@@ -61,5 +64,7 @@ int main() {
         profiling_stop(STOPWATCH_COMMAND);
 
         profiling_stop(STOPWATCH_LOOP);
+
+        telemetry_task_handle();
     }
 }
