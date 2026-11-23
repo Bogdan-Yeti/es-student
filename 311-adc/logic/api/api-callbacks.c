@@ -194,7 +194,7 @@ void api_print_telemetry(const telemetry_record_t *record) {
 static void cmd_tm_start(const command_t *command) {
     uint32_t period = TELEMETRY_DEFAULT_PERIOD_MS;
     if (command->argc > 1 || (command->argc == 1 && !parse_u32(command->argv[0], &period))) {
-        printf("error: usage\n");
+        printf("error: usage tm_start [<period_ms>]\n");
         return;
     }
     if (!telemetry_task_start(period)) {
