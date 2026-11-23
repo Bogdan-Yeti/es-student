@@ -1,0 +1,42 @@
+задание: 3.1.1
+проект: 311-adc
+устройство: 2e8a:000a
+серийный номер: E6635898637C812F
+порт: /dev/cu.usbmodem1201
+начало: 2026-11-23T11:19:28
+   0.000 --> 
+   0.541 --> help
+   0.542 <-- help
+   0.542 <-- help list of commands
+   0.542 <-- info device passport
+   0.542 <-- uptime time since reset
+   0.542 <-- pi_start calculate pi: pi_start [terms]
+   0.542 <-- pi result of calculate pi
+   0.542 <-- led_period set the blinking period
+   0.542 <-- led_enable switch the LED to the 'on' state.
+   0.543 <-- led_disable switch the LED to the 'off' state.
+   0.543 <-- led_blink switch the LED to the 'blinking' state.
+   0.543 <-- button the state of the button and the number of presses.
+   0.543 <-- profiling the results of the stopwatches
+   0.543 <-- profiling_reset reset the stopwatch results.
+   0.594 <-- get_voltage voltage on GP26, ADC input 0
+   1.566 --> info
+   1.619 <-- info
+   1.619 <-- name: es-adc
+   1.619 <-- version: 1.0.0
+   1.619 <-- project: 311-adc
+   1.619 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   1.619 <-- board: unknown
+   1.620 <-- serial: E6635898637C812F
+   1.620 <-- chip: manufacturer 0x927, part 0x0002, revision 2
+   1.620 <-- pico-sdk: 2.3.0
+   2.589 --> get_voltage
+   2.644 <-- get_voltage
+   2.644 <-- voltage: 0.576 V
+   3.597 --> get_voltage
+   3.652 <-- get_voltage
+   3.652 <-- voltage: 0.572 V
+   4.624 --> get_voltage
+   4.680 <-- get_voltage
+   4.680 <-- voltage: 0.591 V
+итог: отправлено кадров 6, принято строк 29
