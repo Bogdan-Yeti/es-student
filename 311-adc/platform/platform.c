@@ -4,6 +4,8 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 
+#define CHARGE_PIN 22
+
 // вход АЦП: вывод GP26, канал 0
 #define ADC_PIN 26
 #define ADC_CHANNEL 0
@@ -13,18 +15,22 @@
 #define ADC_VREF_V 3.3f
 #define ADC_LEVELS 4096
 
-const static uint BUTTON_PIN = 15;
-const static uint LED_PIN = 25;
+#define BUTTON_PIN 15
+#define LED_PIN 25
 
 void platform_init(void) {
     stdio_init_all();
 
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
+    gpio_init(CHARGE_PIN);
+    gpio_set_dir(CHARGE_PIN, GPIO_OUT);
+    platform_charge_set(false);
 
     gpio_init(BUTTON_PIN);
     gpio_set_dir(BUTTON_PIN, GPIO_IN);
     gpio_pull_up(BUTTON_PIN);
+
+    gpio_init(LED_PIN);
+    gpio_set_dir(LED_PIN, GPIO_OUT);
 
     adc_init();
     adc_gpio_init(ADC_PIN);
@@ -49,4 +55,8 @@ float platform_temp_read(void) {
     adc_select_input(ADC_TEMP_CHANNEL);
     float v = adc_read() * ADC_VREF_V / ADC_LEVELS;
     return 27 - (v - 0.706) / 0.001721;
+}
+
+void platform_charge_set(bool on) {
+    gpio_put(CHARGE_PIN, on);
 }

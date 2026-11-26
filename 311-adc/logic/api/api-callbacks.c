@@ -209,22 +209,34 @@ static void cmd_tm_stop(const command_t *command) {
     printf("telemetry: stopped\n");
 }
 
+static void cmd_charge_on(const command_t *command) {
+    platform_charge_set(true);
+    printf("charge: on\n");
+}
+
+static void cmd_charge_off(const command_t *command) {
+    platform_charge_set(false);
+    printf("charge: off\n");
+}
+
 const api_command_t  api_commands[] = {
     { "info", "device passport", cmd_info },
     { "uptime", "time since reset", cmd_uptime_info },
     { "pi_start", "calculate pi: pi_start [terms]", cmd_start_pi },
     { "pi", "result of calculate pi", cmd_pi },
-    { "led_period", "set the blinking period", cmd_led_period},
-    { "led_enable", "switch the LED to the 'on' state.", cmd_led_enable},
-    { "led_disable", "switch the LED to the 'off' state.", cmd_led_disable},
-    { "led_blink", "switch the LED to the 'blinking' state.", cmd_led_blink},
-    { "button", "the state of the button and the number of presses.", cmd_button_enable},
+    { "led_period", "set the blinking period", cmd_led_period },
+    { "led_enable", "switch the LED to the 'on' state.", cmd_led_enable },
+    { "led_disable", "switch the LED to the 'off' state.", cmd_led_disable },
+    { "led_blink", "switch the LED to the 'blinking' state.", cmd_led_blink },
+    { "button", "the state of the button and the number of presses.", cmd_button_enable },
     { "profiling", "the results of the stopwatches", cmd_profiling },
     { "profiling_reset", "reset the stopwatch results.", cmd_profiling_reset },
     { "get_voltage", "voltage on GP26, ADC input 0", cmd_get_voltage },
     { "get_temp", "chip temperature, degrees Celsius", cmd_get_temp },
-    { "tm_start", "start telemetry", cmd_tm_start},
-    { "tm_stop", "stop telemetry", cmd_tm_stop},
+    { "tm_start", "start telemetry", cmd_tm_start },
+    { "tm_stop", "stop telemetry", cmd_tm_stop },
+    { "charge_on", "enable capacitor charging", cmd_charge_on },
+    { "charge_off", "disable capacitor charging", cmd_charge_off }
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);

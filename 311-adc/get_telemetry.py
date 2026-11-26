@@ -100,7 +100,7 @@ def plot(csv_name, png_name):
 
 parser = argparse.ArgumentParser(description="Сбор телеметрии прибора 311-adc")
 parser.add_argument("--seconds", type=float, default=10, help="сколько секунд принимать поток")
-parser.add_argument("--period", type=int, default=100, help="период телеметрии, мс")
+parser.add_argument("--period", type=int, default=5, help="период телеметрии, мс")
 parser.add_argument("--plot", metavar="CSV", help="только построить график из готового файла")
 args = parser.parse_args()
 
