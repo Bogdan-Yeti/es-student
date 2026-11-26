@@ -221,7 +221,7 @@ static void cmd_charge_off(const command_t *command) {
 
 static void cmd_timer_blink_start(const command_t *command) {
     uint32_t period;
-    if (command->argc > 1 || (command->argc == 1 && !parse_u32(command->argv[0], &period))) {
+    if (command->argc != 1 || (command->argc == 1 && !parse_u32(command->argv[0], &period))) {
         printf("error: usage timer_blink_start <period_ms>\n");
         return;
     }
