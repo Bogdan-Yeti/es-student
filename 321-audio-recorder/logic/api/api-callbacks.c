@@ -221,7 +221,7 @@ static void cmd_charge_off(const command_t *command) {
 
 static void cmd_timer_blink_start(const command_t *command) {
     uint32_t period;
-    if (command->argc != 1 || (command->argc == 1 && !parse_u32(command->argv[0], &period))) {
+    if (command->argc != 1 || !parse_u32(command->argv[0], &period)) {
         printf("error: usage timer_blink_start <period_ms>\n");
         return;
     }
@@ -236,6 +236,40 @@ static void cmd_timer_blink_start(const command_t *command) {
 static void cmd_timer_blink_stop(const command_t *command) {
     uint32_t toggles = platform_blink_stop();
     printf("timer_blink: stopped, %lu toggles\n", toggles);
+}
+
+static void cmd_cap_start(const command_t *command) {
+    uint32_t N;
+    uint32_t period_us;
+    if (command->argc != 2 || !parse_u32(command->argv[0], &N) || !parse_u32(command->argv[1], &period_us)) {
+        printf("error: usage cap_start <N> <period_us>\n");
+        return;
+    }
+    if ( N == 0 || N > PLATFORM_CAPTURE_MAX || period_us < 10) {
+        printf("error: N must be 1..2000, period_us at least 10\n");
+        return;
+    }
+    if (telemetry_task_get_state() == TELEMETRY_STATE_RUN || !platform_capture_start(N, period_us)) {
+        printf("error: adc busy\n");
+        return;
+    }
+    printf("capture: started, %lu samples, period %lu us\n", N, period_us);
+}
+
+static void cmd_cap_dump(const command_t *command) {
+    if (!platform_capture_done()) {
+        printf("error: no capture\n");
+        return;
+    }
+    platform_capture_t ans;
+    platform_capture_get(&ans);
+    printf("capture: %lu samples, period %lu us, interval %lu..%lu us, handler %.1f %%\n", 
+           ans.count, ans.period_us, ans.min_interval_us, ans.max_interval_us, ans.handler_percent);
+    printf("cap: \n");
+    for (int i = 0; i != ans.count; i++) {
+        printf("%u ", ans.samples[i]);
+    }
+    putchar('\n');
 }
 
 const api_command_t  api_commands[] = {
@@ -257,7 +291,9 @@ const api_command_t  api_commands[] = {
     { "charge_on", "enable capacitor charging", cmd_charge_on },
     { "charge_off", "disable capacitor charging", cmd_charge_off },
     { "timer_blink_start", "blink led by timer: timer_blink_start <period_ms>", cmd_timer_blink_start },
-    { "timer_blink_stop", "stop timer blink, number of toggles", cmd_timer_blink_stop }
+    { "timer_blink_stop", "stop timer blink, number of toggles", cmd_timer_blink_stop },
+    { "cap_start", "starts the capture", cmd_cap_start },
+    { "cap_dump", "prints the summary", cmd_cap_dump }
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);
