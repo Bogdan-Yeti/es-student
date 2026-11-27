@@ -265,10 +265,9 @@ static void cmd_cap_dump(const command_t *command) {
     platform_capture_get(&ans);
     printf("capture: %lu samples, period %lu us, interval %lu..%lu us, handler %.1f %%\n", 
            ans.count, ans.period_us, ans.min_interval_us, ans.max_interval_us, ans.handler_percent);
+    printf("cap: ");
     for (int i = 0; i != ans.count; i++) {
-        if (i % 16 == 0) {
-            printf("cap: ");
-        } else if (i % 16 == 15 || i == ans.count - 1) {
+        if (i % 16 == 15 || i == ans.count - 1) {
             printf("%u\n", ans.samples[i]);
         } else {
             printf("%u ", ans.samples[i]);
