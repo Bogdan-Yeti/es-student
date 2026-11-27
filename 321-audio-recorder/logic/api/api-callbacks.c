@@ -16,6 +16,7 @@
 #include "systime/systime.h"
 #include "platform/platform.h"
 #include "telemetry-task/telemetry-task.h"
+#include "block-task/block-task.h"
 
 #define TELEMETRY_DEFAULT_PERIOD_MS 100
 
@@ -276,6 +277,40 @@ static void cmd_cap_dump(const command_t *command) {
     }
 }
 
+void print_dma_cap(const uint16_t *samples, uint32_t count, uint32_t time_us) {
+    uint64_t exp =  count * 1000000 / PLATFORM_SAMPLE_RATE_HZ;
+    uint16_t min = 0;
+    uint16_t max = 0;
+    uint32_t sum = 0;
+    for (uint32_t i = 0; i != count; i++) {
+        if (samples[i] < min || min == 0) {
+            min = samples[i];
+        }
+        if (samples[i] > max || max == 0) {
+            max = samples[i];
+        }
+        sum += samples[i];
+    }
+    printf("dma_cap: %lu samples in %lu us, expected %llu us, min %u max %u mean %.1f\n", 
+           count, time_us, exp, min, max, sum * 1.0f / count);
+}
+
+static void cmd_dma_cap(const command_t *command) {
+    uint32_t n;
+    if (command->argc != 1 || !parse_u32(command->argv[0], &n)) {
+        printf("error: usage dma_cap <N>\n");
+        return;
+    }
+    if (n == 0 || n > PLATFORM_BLOCK_MAX) {
+        printf("error: N must be 1..8192\n");
+        return;
+    }
+    if (!block_task_start(n, &print_dma_cap)) {
+        printf("error: adc busy\n");
+        return;
+    }
+}
+
 const api_command_t  api_commands[] = {
     { "info", "device passport", cmd_info },
     { "uptime", "time since reset", cmd_uptime_info },
@@ -297,7 +332,8 @@ const api_command_t  api_commands[] = {
     { "timer_blink_start", "blink led by timer: timer_blink_start <period_ms>", cmd_timer_blink_start },
     { "timer_blink_stop", "stop timer blink, number of toggles", cmd_timer_blink_stop },
     { "cap_start", "starts the capture", cmd_cap_start },
-    { "cap_dump", "prints the summary", cmd_cap_dump }
+    { "cap_dump", "prints the summary", cmd_cap_dump },
+    { "dma_cap", "starts measure adc with dma", cmd_dma_cap }
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);

@@ -1,0 +1,64 @@
+задание: 3.2.3
+проект: 321-audio-recorder
+устройство: 2e8a:000a
+серийный номер: E6635898637C812F
+порт: /dev/cu.usbmodem1201
+начало: 2026-11-27T20:12:37
+   0.000 --> 
+   0.529 --> help
+   0.531 <-- help
+   0.531 <-- help list of commands
+   0.531 <-- info device passport
+   0.531 <-- uptime time since reset
+   0.531 <-- pi_start calculate pi: pi_start [terms]
+   0.531 <-- pi result of calculate pi
+   0.531 <-- led_period set the blinking period
+   0.531 <-- led_enable switch the LED to the 'on' state.
+   0.532 <-- led_disable switch the LED to the 'off' state.
+   0.532 <-- led_blink switch the LED to the 'blinking' state.
+   0.532 <-- button the state of the button and the number of presses.
+   0.532 <-- profiling the results of the stopwatches
+   0.532 <-- profiling_reset reset the stopwatch results.
+   0.532 <-- get_voltage voltage on GP26, ADC input 0
+   0.532 <-- get_temp chip temperature, degrees Celsius
+   0.532 <-- tm_start start telemetry
+   0.532 <-- tm_stop stop telemetry
+   0.532 <-- charge_on enable capacitor charging
+   0.532 <-- charge_off disable capacitor charging
+   0.532 <-- timer_blink_start blink led by timer: timer_blink_start <period_ms>
+   0.585 <-- timer_blink_stop stop timer blink, number of toggles
+   0.585 <-- cap_start starts the capture
+   0.585 <-- cap_dump prints the summary
+   0.585 <-- dma_cap starts measure adc with dma
+   1.550 --> info
+   1.600 <-- info
+   1.601 <-- name: es-recorder
+   1.601 <-- version: 1.0.0
+   1.601 <-- project: 321-audio-recorder
+   1.601 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   1.601 <-- board: unknown
+   1.601 <-- serial: E6635898637C812F
+   1.601 <-- chip: manufacturer 0x927, part 0x0002, revision 2
+   1.601 <-- pico-sdk: 2.3.0
+   2.564 --> dma_cap 1000
+   2.615 <-- dma_cap 1000
+   2.616 <-- dma_cap: 1000 samples in 22675 us, expected 22675 us, min 944 max 966 mean 952.3
+   3.105 --> dma_cap 4410
+   3.160 <-- dma_cap 4410
+   3.211 <-- dma_cap: 4410 samples in 100002 us, expected 2608 us, min 922 max 965 mean 952.2
+   3.642 --> dma_cap 8192
+   3.697 <-- dma_cap 8192
+   3.858 <-- dma_cap: 8192 samples in 185762 us, expected 88368 us, min 906 max 965 mean 952.1
+   4.180 --> uptime
+   4.233 <-- uptime
+   4.233 <-- uptime: 8753 ms
+   4.713 --> dma_cap 0
+   4.766 <-- dma_cap 0
+   4.766 <-- error: N must be 1..8192
+   5.241 --> dma_cap 9000
+   5.296 <-- dma_cap 9000
+   5.296 <-- error: N must be 1..8192
+   5.782 --> dma_cap
+   5.837 <-- dma_cap
+   5.837 <-- error: usage dma_cap <N>
+итог: отправлено кадров 10, принято строк 47

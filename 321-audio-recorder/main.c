@@ -10,6 +10,7 @@
 #include "firmware.h"
 #include "platform.h"
 #include "telemetry-task/telemetry-task.h"
+#include "block-task/block-task.h"
 
 #include "api/api.h"
 
@@ -66,5 +67,7 @@ int main() {
         profiling_stop(STOPWATCH_LOOP);
 
         telemetry_task_handle();
+
+        block_task_handle();
     }
 }
