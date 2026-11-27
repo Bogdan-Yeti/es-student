@@ -3,62 +3,62 @@
 устройство: 2e8a:000a
 серийный номер: E6635898637C812F
 порт: /dev/cu.usbmodem1201
-начало: 2026-11-27T20:12:37
+начало: 2026-11-27T20:18:35
    0.000 --> 
-   0.529 --> help
-   0.531 <-- help
-   0.531 <-- help list of commands
-   0.531 <-- info device passport
-   0.531 <-- uptime time since reset
-   0.531 <-- pi_start calculate pi: pi_start [terms]
-   0.531 <-- pi result of calculate pi
-   0.531 <-- led_period set the blinking period
-   0.531 <-- led_enable switch the LED to the 'on' state.
-   0.532 <-- led_disable switch the LED to the 'off' state.
-   0.532 <-- led_blink switch the LED to the 'blinking' state.
-   0.532 <-- button the state of the button and the number of presses.
-   0.532 <-- profiling the results of the stopwatches
-   0.532 <-- profiling_reset reset the stopwatch results.
-   0.532 <-- get_voltage voltage on GP26, ADC input 0
-   0.532 <-- get_temp chip temperature, degrees Celsius
-   0.532 <-- tm_start start telemetry
-   0.532 <-- tm_stop stop telemetry
-   0.532 <-- charge_on enable capacitor charging
-   0.532 <-- charge_off disable capacitor charging
-   0.532 <-- timer_blink_start blink led by timer: timer_blink_start <period_ms>
-   0.585 <-- timer_blink_stop stop timer blink, number of toggles
-   0.585 <-- cap_start starts the capture
-   0.585 <-- cap_dump prints the summary
-   0.585 <-- dma_cap starts measure adc with dma
-   1.550 --> info
-   1.600 <-- info
-   1.601 <-- name: es-recorder
-   1.601 <-- version: 1.0.0
-   1.601 <-- project: 321-audio-recorder
-   1.601 <-- repo: https://github.com/Bogdan-Yeti/es-student
-   1.601 <-- board: unknown
-   1.601 <-- serial: E6635898637C812F
-   1.601 <-- chip: manufacturer 0x927, part 0x0002, revision 2
-   1.601 <-- pico-sdk: 2.3.0
-   2.564 --> dma_cap 1000
-   2.615 <-- dma_cap 1000
-   2.616 <-- dma_cap: 1000 samples in 22675 us, expected 22675 us, min 944 max 966 mean 952.3
-   3.105 --> dma_cap 4410
-   3.160 <-- dma_cap 4410
-   3.211 <-- dma_cap: 4410 samples in 100002 us, expected 2608 us, min 922 max 965 mean 952.2
-   3.642 --> dma_cap 8192
-   3.697 <-- dma_cap 8192
-   3.858 <-- dma_cap: 8192 samples in 185762 us, expected 88368 us, min 906 max 965 mean 952.1
-   4.180 --> uptime
-   4.233 <-- uptime
-   4.233 <-- uptime: 8753 ms
-   4.713 --> dma_cap 0
-   4.766 <-- dma_cap 0
-   4.766 <-- error: N must be 1..8192
-   5.241 --> dma_cap 9000
-   5.296 <-- dma_cap 9000
-   5.296 <-- error: N must be 1..8192
-   5.782 --> dma_cap
-   5.837 <-- dma_cap
-   5.837 <-- error: usage dma_cap <N>
+   0.542 --> help
+   0.544 <-- help
+   0.544 <-- help list of commands
+   0.544 <-- info device passport
+   0.544 <-- uptime time since reset
+   0.544 <-- pi_start calculate pi: pi_start [terms]
+   0.544 <-- pi result of calculate pi
+   0.544 <-- led_period set the blinking period
+   0.544 <-- led_enable switch the LED to the 'on' state.
+   0.545 <-- led_disable switch the LED to the 'off' state.
+   0.545 <-- led_blink switch the LED to the 'blinking' state.
+   0.545 <-- button the state of the button and the number of presses.
+   0.545 <-- profiling the results of the stopwatches
+   0.545 <-- profiling_reset reset the stopwatch results.
+   0.545 <-- get_voltage voltage on GP26, ADC input 0
+   0.545 <-- get_temp chip temperature, degrees Celsius
+   0.545 <-- tm_start start telemetry
+   0.545 <-- tm_stop stop telemetry
+   0.545 <-- charge_on enable capacitor charging
+   0.545 <-- charge_off disable capacitor charging
+   0.545 <-- timer_blink_start blink led by timer: timer_blink_start <period_ms>
+   0.600 <-- timer_blink_stop stop timer blink, number of toggles
+   0.600 <-- cap_start starts the capture
+   0.600 <-- cap_dump prints the summary
+   0.600 <-- dma_cap starts measure adc with dma
+   1.587 --> info
+   1.638 <-- info
+   1.638 <-- name: es-recorder
+   1.638 <-- version: 1.0.0
+   1.638 <-- project: 321-audio-recorder
+   1.639 <-- repo: https://github.com/Bogdan-Yeti/es-student
+   1.639 <-- board: unknown
+   1.639 <-- serial: E6635898637C812F
+   1.639 <-- chip: manufacturer 0x927, part 0x0002, revision 2
+   1.639 <-- pico-sdk: 2.3.0
+   2.616 --> dma_cap 1000
+   2.669 <-- dma_cap 1000
+   2.669 <-- dma_cap: 1000 samples in 22675 us, expected 22675 us, min 804 max 964 mean 950.2
+   3.160 --> dma_cap 4410
+   3.215 <-- dma_cap 4410
+   3.266 <-- dma_cap: 4410 samples in 100005 us, expected 100000 us, min 801 max 964 mean 951.2
+   3.703 --> dma_cap 8192
+   3.758 <-- dma_cap 8192
+   3.916 <-- dma_cap: 8192 samples in 185761 us, expected 185759 us, min 807 max 994 mean 951.3
+   4.244 --> uptime
+   4.300 <-- uptime
+   4.300 <-- uptime: 29962 ms
+   4.786 --> dma_cap 0
+   4.841 <-- dma_cap 0
+   4.841 <-- error: N must be 1..8192
+   5.335 --> dma_cap 9000
+   5.390 <-- dma_cap 9000
+   5.390 <-- error: N must be 1..8192
+   5.882 --> dma_cap
+   5.937 <-- dma_cap
+   5.937 <-- error: usage dma_cap <N>
 итог: отправлено кадров 10, принято строк 47

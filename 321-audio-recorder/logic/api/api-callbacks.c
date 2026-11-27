@@ -278,7 +278,7 @@ static void cmd_cap_dump(const command_t *command) {
 }
 
 void print_dma_cap(const uint16_t *samples, uint32_t count, uint32_t time_us) {
-    uint64_t exp =  count * 1000000 / PLATFORM_SAMPLE_RATE_HZ;
+    uint64_t exp =  (uint64_t)count * 1000000 / PLATFORM_SAMPLE_RATE_HZ;
     uint16_t min = 0;
     uint16_t max = 0;
     uint32_t sum = 0;
