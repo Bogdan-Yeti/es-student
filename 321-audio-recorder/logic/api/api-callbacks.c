@@ -334,6 +334,38 @@ static void cmd_generate_tone(const command_t *command) {
     }
 }
 
+static void cmd_hang(const command_t *command)
+{
+    printf("hang: superloop stopped\n");
+
+    // суперцикл больше не идёт, прерывания приходят как прежде
+    while (1)
+    {
+    }
+}
+
+static void cmd_wdt_enable(const command_t *command) {
+    uint32_t time;
+    if (command->argc != 1 || !parse_u32(command->argv[0], &time)) {
+        printf("error: usage wdt_enable <timeout_ms>\n");
+        return;
+    }
+    if (!platform_watchdog_enable(time)) {
+        printf("error: timeout_ms must be 1..8388\n");
+        return;
+    }
+    printf("wdt: enabled, timeout %lu ms\n", time);
+}
+
+static void cmd_reset_reason(const command_t *command) {
+    uint32_t restarts;
+    if (platform_watchdog_caused_reset(&restarts)) {
+        printf("reset: watchdog, restarts %lu\n", restarts);
+    } else {
+        printf("reset: other, restarts %lu\n", restarts);
+    }
+}
+
 const api_command_t  api_commands[] = {
     { "info", "device passport", cmd_info },
     { "uptime", "time since reset", cmd_uptime_info },
@@ -359,7 +391,10 @@ const api_command_t  api_commands[] = {
     { "dma_cap", "starts measure adc with dma", cmd_dma_cap },
     { "stream_start", "starts measure adc with dma and double buffer", cmd_stream_start },
     { "stream_stop", "stop measure adc with dma and double buffer", cmd_stream_stop },
-    { "generate_tone", "generate tone with PWM in hz", cmd_generate_tone }
+    { "generate_tone", "generate tone with PWM in hz", cmd_generate_tone },
+    { "hang", "stop superloop", cmd_hang },
+    { "wdt_enable", "enable watchdog timer", cmd_wdt_enable },
+    { "reset_reason", "print last reset reason", cmd_reset_reason }
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);

@@ -7,6 +7,7 @@
 #include "hardware/irq.h"
 #include "hardware/pwm.h"
 #include "hardware/clocks.h"
+#include "hardware/watchdog.h"
 
 #define CHARGE_PIN 22
 
@@ -105,9 +106,25 @@ static void on_stream_buffer(void)
     }
 }
 
+#define WATCHDOG_MAX_MS 8388
+
+static bool watchdog_reset;
+static uint32_t watchdog_restarts;
+
 static uint slice;
 
 void platform_init(void) {
+    watchdog_reset = watchdog_enable_caused_reboot();
+    if (watchdog_reset)
+    {
+        watchdog_hw->scratch[0]++;
+    }
+    else
+    {
+        watchdog_hw->scratch[0] = 0;
+    }
+    watchdog_restarts = watchdog_hw->scratch[0];
+
     stdio_init_all();
 
     gpio_init(CHARGE_PIN);
@@ -437,4 +454,27 @@ bool platform_tone_set(uint32_t freq_hz) {
     pwm_set_wrap(slice, 1000000 / freq_hz - 1);
     pwm_set_gpio_level(TONE_PIN, 500000 / freq_hz);
     return true;
+}
+
+bool platform_watchdog_enable(uint32_t timeout_ms)
+{
+    if (timeout_ms == 0 || timeout_ms > WATCHDOG_MAX_MS)
+    {
+        return false;
+    }
+
+    // true — не считать, пока ядро остановлено отладчиком
+    watchdog_enable(timeout_ms, true);
+    return true;
+}
+
+void platform_watchdog_feed(void)
+{
+    watchdog_update();
+}
+
+bool platform_watchdog_caused_reset(uint32_t *restarts)
+{
+    *restarts = watchdog_restarts;
+    return watchdog_reset;
 }
