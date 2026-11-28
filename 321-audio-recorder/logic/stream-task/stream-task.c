@@ -46,6 +46,7 @@ void stream_task_handle(void) {
     func(&header, buf, bytes);
     num++;
     sum_counts += count;
+    platform_stream_release();
 }
 
 uint32_t stream_task_get_frames(void) {
