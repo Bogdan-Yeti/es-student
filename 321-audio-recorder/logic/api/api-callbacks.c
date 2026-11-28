@@ -317,6 +317,23 @@ static void cmd_stream_stop(const command_t *command) {
             stream_task_get_frames(), stream_task_get_samples(), stream_task_get_overruns());
 }
 
+static void cmd_generate_tone(const command_t *command) {
+    uint32_t freq;
+    if (command->argc != 1 || !parse_u32(command->argv[0], &freq)) {
+        printf("error: usage generate_tone <Hz>]\n");
+        return;
+    }
+    if (!platform_tone_set(freq)) {
+        printf("error: Hz must be 0 or 20..20000\n");
+        return;
+    }
+    if (freq == 0) {
+        printf("tone: off\n");
+    } else {
+        printf("tone: %lu Hz\n", freq);
+    }
+}
+
 const api_command_t  api_commands[] = {
     { "info", "device passport", cmd_info },
     { "uptime", "time since reset", cmd_uptime_info },
@@ -342,6 +359,7 @@ const api_command_t  api_commands[] = {
     { "dma_cap", "starts measure adc with dma", cmd_dma_cap },
     { "stream_start", "starts measure adc with dma and double buffer", cmd_stream_start },
     { "stream_stop", "stop measure adc with dma and double buffer", cmd_stream_stop },
+    { "generate_tone", "generate tone with PWM in hz", cmd_generate_tone }
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);
