@@ -11,6 +11,7 @@
 #include "platform.h"
 #include "telemetry-task/telemetry-task.h"
 #include "block-task/block-task.h"
+#include "stream-task/stream-task.h"
 
 #include "api/api.h"
 

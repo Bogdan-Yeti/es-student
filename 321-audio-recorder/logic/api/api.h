@@ -2,7 +2,7 @@
 
 #include "stdio-text-protocol/stdio-text-protocol.h"
 #include "telemetry-task/telemetry-task.h"
-#include "logic-task/logic-task.h"
+#include "stream-task/stream-task.h"
 
 void api_handle(const command_t *command);
 void api_print_telemetry(const telemetry_record_t *record);
