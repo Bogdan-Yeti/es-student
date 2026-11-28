@@ -17,6 +17,7 @@
 #include "platform/platform.h"
 #include "telemetry-task/telemetry-task.h"
 #include "block-task/block-task.h"
+#include "api.h"
 
 #define TELEMETRY_DEFAULT_PERIOD_MS 100
 
@@ -188,10 +189,6 @@ static void cmd_get_temp(const command_t *command) {
     printf("temp: %.1f C\n", platform_temp_read());
 }
 
-void api_print_telemetry(const telemetry_record_t *record) {
-    printf("tm: %llu %.3f %.1f\n", record->time_us, record->voltage_v, record->temp_c);
-}
-
 static void cmd_tm_start(const command_t *command) {
     uint32_t period = TELEMETRY_DEFAULT_PERIOD_MS;
     if (command->argc > 1 || (command->argc == 1 && !parse_u32(command->argv[0], &period))) {
@@ -277,24 +274,6 @@ static void cmd_cap_dump(const command_t *command) {
     }
 }
 
-void print_dma_cap(const uint16_t *samples, uint32_t count, uint32_t time_us) {
-    uint64_t exp =  (uint64_t)count * 1000000 / PLATFORM_SAMPLE_RATE_HZ;
-    uint16_t min = 0;
-    uint16_t max = 0;
-    uint32_t sum = 0;
-    for (uint32_t i = 0; i != count; i++) {
-        if (samples[i] < min || min == 0) {
-            min = samples[i];
-        }
-        if (samples[i] > max || max == 0) {
-            max = samples[i];
-        }
-        sum += samples[i];
-    }
-    printf("dma_cap: %lu samples in %lu us, expected %llu us, min %u max %u mean %.1f\n", 
-           count, time_us, exp, min, max, sum * 1.0f / count);
-}
-
 static void cmd_dma_cap(const command_t *command) {
     uint32_t n;
     if (command->argc != 1 || !parse_u32(command->argv[0], &n)) {
@@ -309,6 +288,32 @@ static void cmd_dma_cap(const command_t *command) {
         printf("error: adc busy\n");
         return;
     }
+}
+
+#define STREAM_BLINK_PERIOD_MS 250
+
+static void cmd_stream_start(const command_t *command) {
+    uint32_t bits = 16;
+    if (command->argc > 1 || (command->argc == 1 && !parse_u32(command->argv[0], &bits)) || !(bits == 8 || bits == 16)) {
+        printf("error: usage stream_start [8|16]\n");
+        return;
+    }
+    if (!stream_task_start((uint8_t)bits)) {
+        printf("error: adc busy\n");
+        return;
+    }
+
+    platform_blink_start(STREAM_BLINK_PERIOD_MS);
+    led_task_set_state(LED_STATE_OFF);
+
+    printf("stream: started, 44100 Hz, %lu bit\n", bits);
+}
+
+static void cmd_stream_stop(const command_t *command) {
+    stream_task_stop();
+    platform_blink_stop();
+    printf("stream: stopped, %lu frames, %lu samples, %lu overruns\n",
+            stream_task_get_frames(), stream_task_get_samples(), stream_task_get_overruns());
 }
 
 const api_command_t  api_commands[] = {
@@ -333,7 +338,9 @@ const api_command_t  api_commands[] = {
     { "timer_blink_stop", "stop timer blink, number of toggles", cmd_timer_blink_stop },
     { "cap_start", "starts the capture", cmd_cap_start },
     { "cap_dump", "prints the summary", cmd_cap_dump },
-    { "dma_cap", "starts measure adc with dma", cmd_dma_cap }
+    { "dma_cap", "starts measure adc with dma", cmd_dma_cap },
+    { "stream_start", "starts measure adc with dma and double buffer", cmd_stream_start },
+    { "stream_stop", "stop measure adc with dma and double buffer", cmd_stream_stop },
 };
 
 const uint32_t api_command_count = sizeof(api_commands) / sizeof(api_commands[0]);

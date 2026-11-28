@@ -19,7 +19,8 @@ enum {
     STOPWATCH_COMMAND,
     STOPWATCH_LED,
     STOPWATCH_BUTTON,
-    STOPWATCH_PI
+    STOPWATCH_PI,
+    STOPWATCH_STREAM
 };
 
 int main() {
@@ -34,11 +35,14 @@ int main() {
 
     telemetry_task_init(api_print_telemetry);
 
+    stream_task_init(api_send_frame);
+
     profiling_stopwatch_init(STOPWATCH_LOOP, "loop");
     profiling_stopwatch_init(STOPWATCH_COMMAND, "command");
     profiling_stopwatch_init(STOPWATCH_LED, "led");
     profiling_stopwatch_init(STOPWATCH_BUTTON, "button");
     profiling_stopwatch_init(STOPWATCH_PI, "pi");
+    profiling_stopwatch_init(STOPWATCH_STREAM, "stream");
 
     while (1)
     {
@@ -64,10 +68,16 @@ int main() {
         }
         profiling_stop(STOPWATCH_COMMAND);
 
-        profiling_stop(STOPWATCH_LOOP);
-
         telemetry_task_handle();
 
         block_task_handle();
+
+        profiling_start(STOPWATCH_STREAM);
+
+        stream_task_handle();
+
+        profiling_stop(STOPWATCH_STREAM);
+
+        profiling_stop(STOPWATCH_LOOP);
     }
 }

@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#define CLOCK_NUM 5
+#define CLOCK_NUM 6
 
 // по умолчанию профилирование включено
 #ifndef PROFILING_ENABLED
